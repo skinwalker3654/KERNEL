@@ -23,6 +23,6 @@ void printk(const char *msg) {
 
 void kernel_main() {
     clear_screen();
-    printk("Hello, Skinwalker");
+    printk("Hello, Kernel!");
     while(1) {}
 }
