@@ -16,7 +16,7 @@ void printk(const char *msg) {
     while(*msg) {
         video[cursor] = *msg;
         video[cursor+1] = 0x07;
-        cursor += 2;
+        cursor+=2;
         msg++;
     }
 }
