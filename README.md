@@ -43,5 +43,5 @@ KERNEL/
     ```
 3. **Clean build files** 
     ```sh
-    make clean #delets the executable files
+    make clean  #delets the executable files
     ```
