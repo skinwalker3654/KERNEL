@@ -15,8 +15,9 @@ KERNEL/
 │ └── kernel.c # Kernel main code (printk, clear_screen)
 │
 ├── iso/
-│ └── grub/
-│   └── grub.cfg # GRUB configuration file
+│  └── boot/
+│    └── grub/
+│       └── grub.cfg # GRUB configuration file
 │
 ├── linker.ld # connects object files
 ├── Makefile # Build automation
