@@ -9,15 +9,15 @@ and `printk` function for text output.
 ```text
 KERNEL/
 ├── boot/
-│ └── boot.asm # Multiboot2 bootloader (ASM)
+│  └── boot.asm # Multiboot2 bootloader (ASM)
 │
 ├── kernel/
-│ └── kernel.c # Kernel main code (printk, clear_screen)
+│  └── kernel.c # Kernel main code (printk, clear_screen)
 │
 ├── iso/
 │  └── boot/
-│    └── grub/
-│       └── grub.cfg # GRUB configuration file
+│     └── grub/
+│        └── grub.cfg # GRUB configuration file
 │
 ├── linker.ld # connects object files
 ├── Makefile # Build automation
