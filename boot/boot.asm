@@ -21,6 +21,6 @@ _start:
     hlt
 
 section .bss
-stack_botto:
+stack_bottom:
     resb 16384
 stack_top:
