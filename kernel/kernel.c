@@ -1,28 +1,59 @@
-#define VIDEO_MEM 0xB8000
-#define HEIGHT 25
-#define WIDTH 80
+#define VIDEO_MEM ((unsigned short*)0xB8000)
 
-static unsigned char *video = (unsigned char*)VIDEO_MEM;
-static int cursor = 0;
+#define MAX_HEIGHT 25
+#define MAX_WIDTH 80
 
-void clear_screen() {
-    for(int i=0; i<WIDTH*HEIGHT*2; i+=2) {
-        video[i] = ' ';
-        video[i+1] = 0x07;
+int current_width = 0;
+int current_height = 0;
+
+void screen_init() {
+    for(int i=0; i<MAX_WIDTH*MAX_HEIGHT; i++) {
+        VIDEO_MEM[i] = (0x0F << 8) | ' ';
     }
 }
 
-void printk(const char *msg) {
-    while(*msg) {
-        video[cursor] = *msg;
-        video[cursor+1] = 0x07;
-        cursor+=2;
-        msg++;
+void scroll(void) {
+    for(int i=0; i<(MAX_HEIGHT-1)*MAX_WIDTH; i++) {
+        VIDEO_MEM[i] = VIDEO_MEM[i + MAX_WIDTH];
+    }
+
+    for(int i=(MAX_HEIGHT-1)*MAX_WIDTH; i<MAX_HEIGHT*MAX_WIDTH; i++) {
+        VIDEO_MEM[i] = (0x0F << 8) | ' ';
+    }
+
+    current_height = MAX_HEIGHT-1;
+    current_width = 0;
+}
+
+void putchar(char ch) {
+    if(ch == '\n') {
+        current_height--;
+        current_width = 0;
+        current_width++;
+    } else {
+        if(current_width >= MAX_WIDTH) {
+            current_height--;
+            current_width = 0;
+        }
+
+        if(current_height >= MAX_HEIGHT) {
+            scroll();
+        }
+
+        VIDEO_MEM[current_height * MAX_WIDTH + current_width] = (0x0F << 8) | ch;
+        current_width++;
+    }
+}
+
+void printk(char *message) {
+    while(*message) {
+        putchar(*message);
+        message++;
     }
 }
 
 void kernel_main() {
-    clear_screen();
+    screen_init();
     printk("Hello, Kernel!");
-    while(1) {}
+    while(1);
 }
